@@ -10,8 +10,8 @@ const github = require('@octokit/graphql').graphql.defaults({
 })
 
 async function main() {
-  const stale = moment().subtract(2, "days").format("YYYY-MM-DD")
-  const query = `created:<${stale} review:none sort:author-date org:makerbot -label:"Do Not Merge" -label:stale is:pr is:open ${config.authors.map(a => `author:${a}`).join(" ")}`
+  const stale = moment().subtract(parseInt(config.stale.split(" ")[0]), config.stale.split(" ")[1]).format("YYYY-MM-DD")
+  const query = `${config.searchQuery} created:<${stale} ${config.authors.map(a => `author:${a}`).join(" ")}`
   
   const { search: { prs, issueCount } } = await github(`
     {
@@ -20,6 +20,7 @@ async function main() {
         type: ISSUE,
         query: "${query.replace(/"/g, '\\"')}"
       ) {
+        issueCount
         prs: nodes {
           ...on PullRequest {
             url
@@ -33,8 +34,6 @@ async function main() {
             repository { nameWithOwner }
           }
         }
-
-        issueCount
       }
     }
   `)
@@ -46,7 +45,7 @@ async function main() {
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*Good morning, web team!* There are some PRs that are getting old and need to be reviewed. If you get a chance today, please take a look! I'm sure the authors will appreciate it."
+				"text": config.message
 			}
     },
     {
@@ -68,7 +67,7 @@ async function main() {
 			"elements": [
 				{
 					"type": "mrkdwn",
-					"text": "PS: If you don't want your PR to show up here, close it or add the label *Do Not Merge* or *stale*."
+					"text": config.context
 				}
 			]
 		}

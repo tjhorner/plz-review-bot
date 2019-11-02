@@ -1,4 +1,12 @@
-slackWebhook: ""
-githubAccessToken: ""
+slackWebhook: "" # Slack webhook URL
+githubAccessToken: "" # GitHub access token
+# Search query for old PRs. PRs older than the "stale" date will automatically be added.
+searchQuery: "review:none sort:author-date -label:"Do Not Merge" -label:stale is:pr is:open"
+stale: "2 days"
+message: "*Good morning, web team!* There are some PRs that are getting old and need to be reviewed. If you get a chance today, please take a look! I'm sure the authors will appreciate it."
+context: "PS: If you don't want your PR to show up here, close it or add the label *Do Not Merge* or *stale*."
 
-authors: []
+# Filter for authors. If you don't want to, just set this to empty array.
+authors:
+  - tjhorner
+  - octocat

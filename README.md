@@ -1,0 +1,11 @@
+# Plz Review Bot
+
+This is simple bot for Slack that will message a channel of your choice with PRs that are old and need reviews.
+
+## Configuration
+
+See default.yml for config options. Make a `local.yml` file in `config` to set your own vars. I recommend adding `org:YOUR_ORG_USERNAME` to the `searchQuery`.
+
+## License
+
+MIT
