@@ -42,35 +42,35 @@ async function main() {
 
   const blocks = [
     {
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": config.message
-			}
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": config.message
+      }
     },
     {
-			"type": "divider"
-		},
+      "type": "divider"
+    },
     ...prs.slice(0, 3).map(prToSlackBlocks),
     {
-			"type": "divider"
-		},
+      "type": "divider"
+    },
     {
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": `<https://github.com/search?q=${encodeURIComponent(query)}&o=asc&s=created|See all old PRs (${issueCount}) →>`
-			}
-		},
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": `<https://github.com/search?q=${encodeURIComponent(query)}&o=asc&s=created|See all old PRs (${issueCount}) →>`
+      }
+    },
     {
-			"type": "context",
-			"elements": [
-				{
-					"type": "mrkdwn",
-					"text": config.context
-				}
-			]
-		}
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": config.context
+        }
+      ]
+    }
   ]
 
   axios.post(config.slackWebhook, {
